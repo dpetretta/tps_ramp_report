@@ -1025,8 +1025,8 @@ function(a,b,c){if(!Vd(b))throw Error(n(200));return Wd(null,a,b,!1,c)};Q.unmoun
           h(YAxis, { tickFormatter: v => `${prefix}${v}${unit}`, domain: domain || ['auto','auto'], tick:{ fontSize:12, fill:C.muted }}),
           h(Tooltip, { content: h(hiexTooltip(k, prefix, unit)) }),
           h(Legend, { wrapperStyle:{ fontSize:12, paddingTop:8 }}),
-          h(Line, { type:'monotone', dataKey:k, stroke:C.teal, strokeWidth:3, dot:{ r:4 }, name:'Actual', connectNulls:false }),
-          h(Line, { type:'monotone', dataKey:k + 'Ly', stroke:C.gold, strokeWidth:2, strokeDasharray:'6 3', dot:{ r:3 }, name:'Last year (report LY-MTD)', connectNulls:false }))));
+          h(Line, { type:'monotone', dataKey:k, stroke:C.teal, strokeWidth:2.5, dot:{ r:4, fill:C.teal }, name:'Actual', connectNulls:true }),
+          h(Line, { type:'monotone', dataKey:k + 'Ly', stroke:C.gold, strokeWidth:2, strokeDasharray:'6 3', dot:false, name:'Last year (report LY-MTD)', connectNulls:false }))));
   }
 
   function HiexApp() {
