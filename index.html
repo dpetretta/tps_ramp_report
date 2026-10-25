@@ -132,6 +132,154 @@ window.REPORT_DATA = {
 /* DATA-END */
 </script>
 
+<script>
+/* HIEX-DATA-START */
+window.HIEX_DATA = {
+  "generatedDate": "2026-10-25",
+  "dataThrough": "Oct 24, 2026",
+  "dataThroughISO": "2026-10-24",
+  "rooms": 105,
+  "source": "HotelKey General Manager Report (\"Manager Flash\", no-reply@hotelkeyapp.com)",
+  "monthly": [
+    {
+      "month": "2025-07",
+      "label": "Jul '25",
+      "occ": 93.1,
+      "adr": 207.35,
+      "revpar": 192.93,
+      "days": 10,
+      "partial": true,
+      "note": "Only 10 days of data in the PMS for this month"
+    },
+    {
+      "month": "2025-08",
+      "label": "Aug '25",
+      "occ": 91.8,
+      "adr": 210.16,
+      "revpar": 192.92,
+      "days": 31,
+      "partial": false
+    },
+    {
+      "month": "2025-09",
+      "label": "Sep '25",
+      "occ": 86.8,
+      "adr": 198.9,
+      "revpar": 172.63,
+      "days": 30,
+      "partial": false
+    },
+    {
+      "month": "2026-01",
+      "label": "Jan '26",
+      "occ": 71.6,
+      "adr": 183.56,
+      "revpar": 131.45,
+      "days": 31,
+      "partial": false,
+      "note": "Derived: Feb month-end report Y-T-D minus Feb M-T-D (no Jan month-end report in mail)"
+    },
+    {
+      "month": "2026-02",
+      "label": "Feb '26",
+      "occ": 75.0,
+      "adr": 178.26,
+      "revpar": 133.76,
+      "days": 28,
+      "partial": false
+    },
+    {
+      "month": "2026-03",
+      "label": "Mar '26",
+      "occ": 73.6,
+      "adr": 165.22,
+      "revpar": 121.57,
+      "days": 31,
+      "partial": false
+    },
+    {
+      "month": "2026-04",
+      "label": "Apr '26",
+      "occ": 72.5,
+      "adr": 175.05,
+      "revpar": 126.98,
+      "days": 30,
+      "partial": false
+    },
+    {
+      "month": "2026-05",
+      "label": "May '26",
+      "occ": 73.2,
+      "adr": 175.89,
+      "revpar": 128.82,
+      "days": 31,
+      "partial": false
+    },
+    {
+      "month": "2026-06",
+      "label": "Jun '26",
+      "occ": 76.3,
+      "adr": 180.32,
+      "revpar": 137.61,
+      "days": 30,
+      "partial": false
+    },
+    {
+      "month": "2026-07",
+      "label": "Jul '26",
+      "occ": 84.7,
+      "adr": 193.89,
+      "revpar": 164.29,
+      "days": 31,
+      "partial": false
+    },
+    {
+      "month": "2026-08",
+      "label": "Aug '26",
+      "occ": 85.8,
+      "adr": 189.21,
+      "revpar": 162.35,
+      "days": 31,
+      "partial": false,
+      "ly": {
+        "occ": 91.8,
+        "adr": 210.16,
+        "revpar": 192.92
+      }
+    },
+    {
+      "month": "2026-09",
+      "label": "Sep '26",
+      "occ": 84.0,
+      "adr": 180.36,
+      "revpar": 151.56,
+      "days": 30,
+      "partial": false,
+      "ly": {
+        "occ": 86.8,
+        "adr": 198.9,
+        "revpar": 172.63
+      }
+    },
+    {
+      "month": "2026-10",
+      "label": "Oct '26",
+      "occ": 78.6,
+      "adr": 178.63,
+      "revpar": 140.42,
+      "days": 24,
+      "partial": true,
+      "ly": {
+        "occ": 84.5,
+        "adr": 196.94,
+        "revpar": 166.46
+      }
+    }
+  ]
+};
+/* HIEX-DATA-END */
+</script>
+
 <script>/* react */
 /**
  * @license React
@@ -837,8 +985,141 @@ function(a,b,c){if(!Vd(b))throw Error(n(200));return Wd(null,a,b,!1,c)};Q.unmoun
     );
   }
 
-  // ── ROOT APP ──────────────────────────────────────────────────────────────────
+  // ── HIEX VIEW (Holiday Inn Express & Suites Windsor East – Lakeshore) ───────
+  // Data: window.HIEX_DATA (HIEX-DATA block). Comparisons are the HotelKey report's own LY-M-T-D only.
+  function HiexKpi({ label, actual, ly, prefix='', unit='', note }) {
+    const has = ly != null;
+    const delta = has ? actual - ly : 0, pos = delta >= 0;
+    const fmt = v => unit === '%' ? v.toFixed(1) : v.toFixed(2);
+    return h('div', { style:{ background:C.white, borderRadius:12, padding:'20px 22px', flex:'1 1 160px', minWidth:160,
+                              boxShadow:'0 2px 12px rgba(13,27,42,0.08)', borderTop:`3px solid ${!has ? C.slate : pos ? C.teal : C.red}` }},
+      h('div', { style:{ fontSize:11, fontWeight:700, letterSpacing:'0.08em', color:C.muted, textTransform:'uppercase', marginBottom:6 }}, label),
+      h('div', { style:{ fontSize:28, fontWeight:800, color:C.navy, letterSpacing:'-0.02em' }}, `${prefix}${fmt(actual)}${unit}`),
+      h('div', { style:{ display:'flex', gap:8, alignItems:'center', marginTop:8 }},
+        has ? h('span', { style:{ fontSize:12, color:C.muted }}, `Last year: ${prefix}${fmt(ly)}${unit}`)
+            : h('span', { style:{ fontSize:12, color:C.muted }}, 'No LY comparison in report'),
+        has && h('span', { style:{ fontSize:11, fontWeight:700, padding:'2px 7px', borderRadius:20,
+                                   background: pos ? '#E6F5EE' : '#FBE9E9', color: pos ? C.green : C.red }},
+          `${pos ? '▲' : '▼'} ${prefix}${Math.abs(delta).toFixed(unit==='%' ? 1 : 2)}${unit==='%' ? 'pp' : ''}`)),
+      note && h('div', { style:{ fontSize:11, color:C.muted, marginTop:6 }}, note));
+  }
+
+  function hiexTooltip(key, prefix, unit) {
+    return function T({ active, payload, label }) {
+      if (!active || !payload?.length) return null;
+      const a = payload.find(p => p.dataKey === key), l = payload.find(p => p.dataKey === key + 'Ly');
+      const f = v => unit === '%' ? v.toFixed(1) : v.toFixed(2);
+      return h('div', { style:{ background:C.white, border:'1px solid #dde3ea', borderRadius:8, padding:'10px 14px', fontSize:13, boxShadow:'0 4px 16px rgba(0,0,0,0.12)' }},
+        h('div', { style:{ fontWeight:700, color:C.navy, marginBottom:4 }}, label),
+        a && a.value != null && h('div', { style:{ color:C.teal }}, 'Actual: ', h('b', null, `${prefix}${f(a.value)}${unit}`)),
+        l && l.value != null && h('div', { style:{ color:C.gold }}, 'Last year: ', h('b', null, `${prefix}${f(l.value)}${unit}`)));
+    };
+  }
+
+  function HiexChart({ data, k, prefix, unit, domain }) {
+    return h(ChartCard, null,
+      h(ResponsiveContainer, { width:'100%', height:280 },
+        h(LineChart, { data, margin:{ top:8, right:24, bottom:4, left:0 }},
+          h(CartesianGrid, { strokeDasharray:'3 3', stroke:'#EEF2F5' }),
+          h(XAxis, { dataKey:'label', tick:{ fontSize:12, fill:C.muted }}),
+          h(YAxis, { tickFormatter: v => `${prefix}${v}${unit}`, domain: domain || ['auto','auto'], tick:{ fontSize:12, fill:C.muted }}),
+          h(Tooltip, { content: h(hiexTooltip(k, prefix, unit)) }),
+          h(Legend, { wrapperStyle:{ fontSize:12, paddingTop:8 }}),
+          h(Line, { type:'monotone', dataKey:k, stroke:C.teal, strokeWidth:3, dot:{ r:4 }, name:'Actual', connectNulls:false }),
+          h(Line, { type:'monotone', dataKey:k + 'Ly', stroke:C.gold, strokeWidth:2, strokeDasharray:'6 3', dot:{ r:3 }, name:'Last year (report LY-MTD)', connectNulls:false }))));
+  }
+
+  function HiexApp() {
+    const [tab, setTab] = useState('overview');
+    const hd = window.HIEX_DATA || { monthly: [] };
+    const rows = hd.monthly.map(m => ({ ...m, occLy: m.ly ? m.ly.occ : null, adrLy: m.ly ? m.ly.adr : null, revparLy: m.ly ? m.ly.revpar : null }));
+    const series = [];  // chart rows with gaps for months not on file
+    rows.forEach((r, i) => {
+      if (i) { let [y, m] = rows[i-1].month.split('-').map(Number);
+        while (true) { m++; if (m > 12) { m = 1; y++; } const k = `${y}-${String(m).padStart(2,'0')}`; if (k >= r.month) break;
+          series.push({ month:k, label:new Date(y, m-1, 1).toLocaleDateString('en-US', { month:'short' }) + ` '${String(y).slice(2)}`, occ:null, adr:null, revpar:null, occLy:null, adrLy:null, revparLy:null }); } }
+      series.push(r); });
+    const full = rows.filter(m => !m.partial), latestFull = full[full.length - 1], cur = rows[rows.length - 1];
+    const genDate = hd.generatedDate ? new Date(hd.generatedDate + 'T12:00:00').toLocaleDateString('en-CA', { year:'numeric', month:'long', day:'numeric' }) : '';
+    const tabs = [{ id:'overview', label:'Overview' }, { id:'trends', label:'ADR & RevPAR' }, { id:'data', label:'Monthly Data' }];
+    const cards = (m, sub) => h('div', null,
+      h(SectionHeader, sub),
+      h('div', { style:{ display:'flex', gap:14, flexWrap:'wrap', marginBottom:32 }},
+        h(HiexKpi, { label:'Occupancy', actual:m.occ, ly:m.ly && m.ly.occ, unit:'%', note:`${m.label} · ${m.days} days` }),
+        h(HiexKpi, { label:'ADR', actual:m.adr, ly:m.ly && m.ly.adr, prefix:'$' }),
+        h(HiexKpi, { label:'RevPAR', actual:m.revpar, ly:m.ly && m.ly.revpar, prefix:'$' })));
+    const colStyle = { display:'grid', gridTemplateColumns:'1fr 1fr 1fr 1fr 1fr 1fr 1fr', gap:8 };
+    const dl = (a, b, p, u) => b == null ? '—' : `${a - b >= 0 ? '▲' : '▼'}${p}${Math.abs(a - b).toFixed(u === 'pp' ? 1 : 2)}${u}`;
+    const dc = (a, b) => b == null ? C.muted : a - b >= 0 ? C.green : C.red;
+    return h('div', { style:{ fontFamily:"'Inter','Segoe UI',system-ui,sans-serif", background:C.fog, minHeight:'100vh' }},
+      h('div', { style:{ background:`linear-gradient(135deg, ${C.navy} 0%, ${C.slate} 100%)`, padding:'32px 40px 24px', color:C.white }},
+        h('div', { style:{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', flexWrap:'wrap', gap:16 }},
+          h('div', null,
+            h('div', { style:{ fontSize:11, fontWeight:700, letterSpacing:'0.15em', color:C.goldLight, textTransform:'uppercase', marginBottom:6 }}, 'Petcon Hospitality Group · Performance Intelligence'),
+            h('div', { style:{ fontSize:26, fontWeight:900, letterSpacing:'-0.02em', lineHeight:1.2 }}, 'Holiday Inn Express & Suites'),
+            h('div', { style:{ fontSize:15, color:'rgba(255,255,255,0.65)', marginTop:4 }}, `Windsor East – Lakeshore, Ontario · ${hd.rooms || 105} Rooms`)),
+          h('div', { style:{ textAlign:'right' }},
+            h('div', { style:{ fontSize:11, color:'rgba(255,255,255,0.5)', marginBottom:2 }}, 'Updated'),
+            h('div', { style:{ fontSize:13, fontWeight:600, color:C.goldLight }}, genDate),
+            h('div', { style:{ marginTop:8, display:'inline-block', background:'rgba(255,255,255,0.1)', borderRadius:20, padding:'4px 12px', fontSize:11 }}, `Data through ${hd.dataThrough || '—'}`))),
+        h('div', { style:{ marginTop:20, padding:'12px 16px', background:'rgba(0,0,0,0.2)', borderRadius:8 }},
+          h('div', { style:{ fontSize:10, fontWeight:700, letterSpacing:'0.1em', color:C.goldLight, textTransform:'uppercase', marginBottom:8 }}, 'Source & Comparisons'),
+          h('div', { style:{ display:'flex', gap:6, flexWrap:'wrap' }},
+            h(Chip, { label:'Source', value:'HotelKey GM Report (daily “Manager Flash”)', color:C.white }),
+            h(Chip, { label:'Comparison', value:'Same period last year (report LY-M-T-D)', color:C.goldLight }),
+            h(Chip, { label:'Budget', value:'Not in report — not shown', color:C.teal2 })))),
+      h('div', { style:{ background:C.white, borderBottom:'1px solid #DDE3EA', padding:'0 36px', display:'flex', gap:4 }},
+        tabs.map(t => h(Tab, { key:t.id, label:t.label, active:tab===t.id, onClick:()=>setTab(t.id) }))),
+      h('div', { style:{ padding:'28px 36px', maxWidth:1100, margin:'0 auto' }},
+        tab === 'overview' && h('div', null,
+          latestFull && cards(latestFull, { subtitle:'Most Recent Full Month vs. Same Month Last Year', title:`Performance Scorecard — ${latestFull.label}` }),
+          cur && cur.partial && cards(cur, { subtitle:`${cur.days}-day read — current month vs. same period last year`, title:`Month to Date — ${cur.label}` }),
+          h(SectionHeader, { subtitle:'Monthly Occupancy vs. Last Year', title:'Occupancy Trend' }),
+          h(HiexChart, { data:series, k:'occ', prefix:'', unit:'%', domain:[0,100] })),
+        tab === 'trends' && h('div', null,
+          h(SectionHeader, { subtitle:'Monthly Average Daily Rate vs. Last Year', title:'ADR Trend' }),
+          h(HiexChart, { data:series, k:'adr', prefix:'$', unit:'' }),
+          h(SectionHeader, { subtitle:'Revenue per Available Room vs. Last Year', title:'RevPAR Trend' }),
+          h(HiexChart, { data:series, k:'revpar', prefix:'$', unit:'' })),
+        tab === 'data' && h('div', null,
+          h(SectionHeader, { subtitle:'All months on file', title:'Monthly Data' }),
+          h('div', { style:{ background:C.white, borderRadius:12, overflow:'hidden', boxShadow:'0 2px 12px rgba(13,27,42,0.06)', marginBottom:20 }},
+            h('div', { style:{ ...colStyle, background:C.navy, color:C.white, padding:'10px 14px', fontSize:11, fontWeight:700, letterSpacing:'0.04em' }},
+              h('span',null,'Month'), h('span',null,'Occ %'), h('span',null,'Δ Occ vs LY'), h('span',null,'ADR'), h('span',null,'Δ ADR vs LY'), h('span',null,'RevPAR'), h('span',null,'Δ RevPAR vs LY')),
+            rows.map((r, i) => h('div', { key:r.month, style:{ ...colStyle, background: i%2===0 ? C.fog : C.white, padding:'9px 14px', fontSize:13, alignItems:'center' }},
+              h('span', { title:r.note || '', style:{ fontWeight:600, color:C.navy }}, `${r.label}${r.partial ? ' *' : ''}${r.note ? ' †' : ''}`),
+              h('span', { style:{ fontWeight:700 }}, `${r.occ.toFixed(1)}%`),
+              h('span', { style:{ color:dc(r.occ, r.occLy), fontSize:12 }}, dl(r.occ, r.occLy, '', 'pp')),
+              h('span', { style:{ fontWeight:700 }}, `$${r.adr.toFixed(2)}`),
+              h('span', { style:{ color:dc(r.adr, r.adrLy), fontSize:12 }}, dl(r.adr, r.adrLy, '$', '')),
+              h('span', { style:{ fontWeight:700 }}, `$${r.revpar.toFixed(2)}`),
+              h('span', { style:{ color:dc(r.revpar, r.revparLy), fontSize:12 }}, dl(r.revpar, r.revparLy, '$', '')))),
+            h('div', { style:{ padding:'10px 14px', fontSize:11, color:C.muted, borderTop:'1px solid #EEF2F5', lineHeight:1.6 }},
+              '* Partial month · † Jan \'26 derived from the Feb month-end report (Y-T-D minus Feb M-T-D); Jul \'25 has only 10 days of PMS history · ',
+              '— = report has no full-period LY figures (HotelKey history starts Jul 22, 2025) · Months with no month-end report on file are omitted')))),
+      h('div', { style:{ background:C.navy, color:'rgba(255,255,255,0.4)', padding:'16px 40px', fontSize:11, display:'flex', justifyContent:'space-between', flexWrap:'wrap', gap:8 }},
+        h('span', null, 'Petcon Hospitality Group · Holiday Inn Express & Suites Windsor East – Lakeshore · Confidential'),
+        h('span', null, `HotelKey General Manager Report · Data through ${hd.dataThrough || '—'}`)));
+  }
+
+  // ── PROPERTY TOGGLE ───────────────────────────────────────────────────────────
   function App() {
+    const init = (location.hash || '').toLowerCase() === '#hiex' ? 'hiex' : 'tps';
+    const [prop, setProp] = useState(init);
+    const pick = p => { setProp(p); history.replaceState(null, '', p === 'hiex' ? '#hiex' : location.pathname + location.search); };
+    const btn = (id, label) => h('button', { key:id, onClick:() => pick(id),
+      style:{ border:'none', cursor:'pointer', padding:'8px 16px', borderRadius:20, fontSize:13, fontWeight:700,
+              background: prop === id ? C.goldLight : 'transparent', color: prop === id ? C.navy : 'rgba(255,255,255,0.75)' }}, label);
+    return h('div', null,
+      h('div', { style:{ background:'#081420', padding:'10px 40px', display:'flex', alignItems:'center', gap:12, flexWrap:'wrap' }},
+        h('span', { style:{ fontSize:10, fontWeight:700, letterSpacing:'0.15em', color:'rgba(255,255,255,0.45)', textTransform:'uppercase' }}, 'Property'),
+        h('div', { style:{ display:'flex', gap:4, background:'rgba(255,255,255,0.08)', borderRadius:22, padding:3 }},
+          btn('tps', 'TownePlace Suites'), btn('hiex', 'HIEX Windsor East – Lakeshore'))),
+      prop === 'tps' ? h(TpsApp) : h(HiexApp));
+  }
+
+  // ── ROOT APP ──────────────────────────────────────────────────────────────────
+  function TpsApp() {
     const [tab, setTab] = useState('overview');
     const rd = window.REPORT_DATA;
     const chartData = buildChartData(rd.monthly);
